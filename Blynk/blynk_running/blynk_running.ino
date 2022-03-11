@@ -18,6 +18,7 @@ BlynkTimer timer;
 #define DHTPIN 4 //Connect Out pin to D2 in NODE MCU
 #define DHTTYPE DHT11  
 DHT dht(DHTPIN, DHTTYPE);
+
 // TDS
 #define TdsSensorPin A0
 #define VREF 5.0      // analog reference voltage(Volt) of the ADC
@@ -53,7 +54,7 @@ void setup()
   pinMode(TdsSensorPin,INPUT);
   Blynk.begin(auth, ssid, pass);
   dht.begin();
-  timer.setInterval(100L, sendSensor);
+  timer.setInterval(1000L, sendSensor);
  
   }
 int getMedianNum(int bArray[], int iFilterLen) 
@@ -83,7 +84,7 @@ int getMedianNum(int bArray[], int iFilterLen)
 void loop()
 {
   static unsigned long analogSampleTimepoint = millis();
-   if(millis()-analogSampleTimepoint > 40U)     //every 40 milliseconds,read the analog value from the ADC
+   if(millis()-analogSampleTimepoint > 80U)     //every 40 milliseconds,read the analog value from the ADC
    {
      analogSampleTimepoint = millis();
      analogBuffer[analogBufferIndex] = analogRead(TdsSensorPin);    //read the analog value and store into the buffer
