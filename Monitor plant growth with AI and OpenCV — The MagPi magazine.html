@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)https://magpi.raspberrypi.com/articles/monitor-plant-growth-ai-opencv -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+
+<title>Monitor plant growth with AI and OpenCV — The MagPi magazine</title>
+
+<meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="Mfm0iZJftQ2qx3ZJAg9y86n-ufZdpepvIM5bfL47too7AxJuxysRGYSSdDBB5VmNigFyQQzDOJMlEwGU9GG66A">
+<meta name="shopify-domain" content="the-magpi-store.myshopify.com">
+<meta name="shopify-storefront-access-token" content="bf21f654fb41fc67a48959c863bc73da">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://images.ctfassets.net/2lpsze4g694w/2ysAS74ShLou9h60dinTRQ/fe71a5612ba2512065e24b9ddd710049/monitor-plant-growth-with-ai.jpg?w=800">
+<meta name="twitter:title" content="Monitor plant growth with AI and OpenCV — The MagPi magazine">
+<meta property="og:description" content="Measure the height and width of objects with your Raspberry Pi using only the Pi Camera Module and OpenCV">
+<meta property="og:image" content="https://images.ctfassets.net/2lpsze4g694w/2ysAS74ShLou9h60dinTRQ/fe71a5612ba2512065e24b9ddd710049/monitor-plant-growth-with-ai.jpg?w=800">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="The MagPi magazine">
+<meta property="og:title" content="Monitor plant growth with AI and OpenCV — The MagPi magazine">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://magpi.raspberrypi.com/articles/monitor-plant-growth-ai-opencv">
+
+  <meta name="twitter:site" content="@TheMagPi">
+  <meta name="twitter:creator" content="@TheMagPi">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<link rel="shortcut icon" type="image/png" href="https://magazines-assets.raspberrypi.org/assets/magpi/favicon-2e81fa1667d39422c3172bc3d8a4f522dbfabd1fe9dfa721a2a4df74a593ea3c.png">
+
+<link rel="stylesheet" media="screen" href="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/magpi-8412686092de8528cad2ac769d284f9085e506e697a747e74977cdf651cabf4e.css" data-turbolinks-track="reload">
+
+  <link rel="stylesheet" media="screen" href="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/prism-tomorrow.min.css">
+
+
+  <script type="text/javascript" async="" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/analytics.js.download"></script><script src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/js" async="async"></script>
+<script>
+  window.GA_MEASUREMENT_ID = 'UA-180927933-1';
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', GA_MEASUREMENT_ID, { 'anonymize_ip': true, send_page_view: false });
+</script>
+
+
+<script src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/gpt.js.download" async="async"></script>
+
+<script src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/application-72dd904a7a1c6103c8dc.js.download" data-turbolinks-track="reload"></script><style>.shopify-buy-modal-is-active {
+  height: 100%;
+  overflow: auto;
+}
+
+.shopify-buy-frame {
+  display: inline-block
+}
+
+.shopify-buy-frame iframe {
+    width: 100%;
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+
+.shopify-buy-frame--cart {
+  width: 100%;
+  max-width: 350px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  z-index: 2147483647;
+  transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  visibility: hidden
+}
+
+.shopify-buy-frame--cart iframe {
+    height: 100%;
+    display: none
+  }
+
+.shopify-buy-frame--cart iframe.is-block {
+      display: block;
+    }
+
+.shopify-buy-frame--cart.is-initialized {
+    -webkit-transition: -webkit-transform 250ms cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: -webkit-transform 250ms cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: transform 250ms cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: transform 250ms cubic-bezier(0.165, 0.84, 0.44, 1), -webkit-transform 250ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+.shopify-buy-frame--cart.is-active {
+    transform: translateX(0);
+    -webkit-transform: translateX(0);
+  }
+
+.shopify-buy-frame--cart.is-visible {
+    visibility: visible;
+  }
+
+.shopify-buy-frame--product {
+  display: block
+}
+
+.shopify-buy-frame--product.shopify-buy__layout-horizontal {
+    display: block;
+    margin-left: auto;
+
+    margin-right: auto
+  }
+
+.shopify-buy-frame--product.shopify-buy__layout-horizontal iframe {
+      max-width: 100%
+    }
+
+@media (min-width: 950px) {
+
+.shopify-buy-frame--product.shopify-buy__layout-horizontal iframe {
+        max-width: 950px;
+        margin-left: auto;
+        margin-right: auto
+    }
+      }
+
+.shopify-buy-frame--toggle {
+  display: inline-block
+}
+
+.shopify-buy-frame--toggle:not(.is-sticky) {
+    overflow: hidden;
+    padding: 5px;
+  }
+
+.shopify-buy-frame--toggle.is-sticky {
+    display: none;
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    z-index: 2147483645;
+  }
+
+.shopify-buy-frame--toggle.is-active.is-sticky {
+    display: block;
+  }
+
+.is-active .shopify-buy-frame--toggle iframe {
+      min-height: 67px;
+    }
+
+.shopify-buy-frame--productSet {
+  width: 100%;
+}
+
+.shopify-buy-frame--modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2147483646;
+  display: none;
+  -webkit-transition: background 300ms ease;
+  transition: background 300ms ease
+}
+
+.shopify-buy-frame--modal iframe {
+    height: 100%;
+    width: 100%;
+    max-width: none;
+  }
+
+.shopify-buy-frame--modal.is-active {
+    background: rgba(0,0,0,0.6);
+  }
+
+.shopify-buy-frame--modal.is-block {
+    display: block;
+  }
+</style>
+
+  <link rel="alternate" type="application/rss+xml" title="The MagPi" href="https://magpi.raspberrypi.com/articles">
+
+
+  </head>
+
+  <body data-new-gr-c-s-check-loaded="14.1036.0" data-gr-ext-installed="">
+      <header class="c-header">
+  <div class="c-container__container o-container">
+    <a class="c-home-link" href="https://magpi.raspberrypi.com/">
+      <img alt="The MagPi magazine" class="c-home-link__logo" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/logo-ef7eb3e4614032fb9d21b4d1ba0e12828d00a814cf75e515d95cdaea1917603e.png">
+</a>
+    <div class="c-header-social">
+      <ul class="c-social-list">
+    <li class="c-social-list__item">
+      <a class="c-social-list__link" href="https://www.youtube.com/channel/UCgZlbxTljh1aXKijTRye5bA">
+        <svg height="30px" version="1.1" viewBox="0 0 60 60" width="30px" x="0px" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <path class="svg-path" fill="#bc1e44" fill-rule="evenodd" d="M56.35 16.676a6.91 6.91 0 00-4.862-4.894C47.199 10.625 30 10.625 30 10.625s-17.2 0-21.488 1.157a6.91 6.91 0 00-4.863 4.894C2.5 20.993 2.5 30 2.5 30s0 9.007 1.15 13.324a6.911 6.911 0 004.862 4.894C12.8 49.375 30 49.375 30 49.375s17.2 0 21.488-1.157a6.91 6.91 0 004.863-4.894C57.5 39.007 57.5 30 57.5 30s0-9.007-1.15-13.324 M24.375 38.178L38.75 30l-14.375-8.178v16.356z"></path>
+</svg>
+
+        <span class="u-visually-hidden">Subscribe to The MagPi on YouTube</span>
+</a>    </li>
+
+    <li class="c-social-list__item">
+      <a class="c-social-list__link" href="https://www.facebook.com/MagPiMagazine">
+        <svg height="30px" version="1.1" viewBox="0 0 60.734 60.733" width="30px" x="0px" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" y="0px">
+  <path class="svg-path" d="
+      M57.378,0.001H3.352C1.502,0.001,0,1.5,0,3.353v54.026c0,1.853,1.502,3.354,3.352,3.354h29.086V37.214h-7.914v-9.167h7.914
+      v-6.76c0-7.843,4.789-12.116,11.787-12.116c3.355,0,6.232,0.251,7.071,0.36v8.198l-4.854,0.002c-3.805,0-4.539,1.809-4.539,4.462
+      v5.851h9.078l-1.187,9.166h-7.892v23.52h15.475c1.852,0,3.355-1.503,3.355-3.351V3.351C60.731,1.5,59.23,0.001,57.378,0.001z
+    " fill="#bc1e44"></path>
+</svg>
+
+        <span class="u-visually-hidden">Like The MagPi on Facebook</span>
+</a>    </li>
+
+    <li class="c-social-list__item">
+      <a class="c-social-list__link" href="https://twitter.com/TheMagPi">
+        <svg height="30px" version="1.1" viewBox="0 0 612 612" width="30px" x="0px" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" y="0px">
+  <path class="svg-path" d="
+      M612,116.258c-22.525,9.981-46.694,16.75-72.088,19.772c25.929-15.527,45.777-40.155,55.184-69.411
+      c-24.322,14.379-51.169,24.82-79.775,30.48c-22.907-24.437-55.49-39.658-91.63-39.658c-69.334,0-125.551,56.217-125.551,125.513
+      c0,9.828,1.109,19.427,3.251,28.606C197.065,206.32,104.556,156.337,42.641,80.386c-10.823,18.51-16.98,40.078-16.98,63.101
+      c0,43.559,22.181,81.993,55.835,104.479c-20.575-0.688-39.926-6.348-56.867-15.756v1.568c0,60.806,43.291,111.554,100.693,123.104
+      c-10.517,2.83-21.607,4.398-33.08,4.398c-8.107,0-15.947-0.803-23.634-2.333c15.985,49.907,62.336,86.199,117.253,87.194
+      c-42.947,33.654-97.099,53.655-155.916,53.655c-10.134,0-20.116-0.612-29.944-1.721c55.567,35.681,121.536,56.485,192.438,56.485
+      c230.948,0,357.188-191.291,357.188-357.188l-0.421-16.253C573.872,163.526,595.211,141.422,612,116.258z
+    " fill="#bc1e44"></path>
+</svg>
+
+        <span class="u-visually-hidden">Follow The MagPi on Twitter</span>
+</a>    </li>
+
+    <li class="c-social-list__item">
+      <a class="c-social-list__link" href="https://magpi.raspberrypi.com/feed">
+        <svg height="30px" version="1.1" viewBox="0 0 430.117 430.118" width="30px" x="0px" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" y="0px">
+  <path class="svg-path" d="
+      M97.493,332.473c10.419,10.408,16.755,24.525,16.794,40.244c-0.04,15.687-6.375,29.809-16.755,40.17l-0.04,0.019
+      c-10.398,10.352-24.603,16.681-40.398,16.681c-15.775,0-29.944-6.348-40.34-16.699C6.384,402.526,0,388.422,0,372.717
+      c0-15.719,6.384-29.869,16.754-40.253v0.009c10.401-10.36,24.57-16.735,40.34-16.735C72.89,315.738,87.081,322.131,97.493,332.473z
+      M97.493,332.464v0.009c0.019,0,0.019,0,0.019,0L97.493,332.464z M16.754,412.906c0,0,0,0,0-0.019c-0.019,0-0.019,0-0.019,0
+      L16.754,412.906z M0.046,146.259v82.129c53.618,0.033,104.328,21.096,142.278,59.104c37.943,37.888,58.917,88.675,59.003,142.477
+      h0.028v0.149h82.467c-0.065-78.233-31.866-149.099-83.279-200.549C149.122,178.126,78.285,146.308,0.046,146.259z M0.196,0v82.089
+      c191.661,0.14,347.464,156.184,347.594,348.028h82.327c-0.056-118.571-48.248-225.994-126.132-303.932
+      C226.073,48.274,118.721,0.051,0.196,0z
+    " fill="#bc1e44"></path>
+</svg>
+
+        <span class="u-visually-hidden">Subscribe to the The MagPi RSS feed</span>
+</a>    </li>
+</ul>
+
+    </div>
+  </div>
+
+  <nav class="c-header__nav">
+    <div class="o-container">
+      <ul class="c-nav">
+          <li class="c-nav__item">
+            <a class="c-nav__link" href="https://magpi.raspberrypi.com/articles">Articles</a>
+          </li>
+          <li class="c-nav__item">
+            <a class="c-nav__link" href="https://magpi.raspberrypi.com/articles/category/tutorials">Tutorials</a>
+          </li>
+          <li class="c-nav__item">
+            <a class="c-nav__link" href="https://magpi.raspberrypi.com/articles/category/reviews">Reviews</a>
+          </li>
+          <li class="c-nav__item">
+            <a class="c-nav__link" href="https://magpi.raspberrypi.com/issues">Issues</a>
+          </li>
+          <li class="c-nav__item">
+            <a class="c-nav__link" href="https://magpi.raspberrypi.com/books">Books</a>
+          </li>
+          <li class="c-nav__item">
+            <a class="c-nav__link" href="https://magpi.raspberrypi.com/subscribe/new">Subscribe</a>
+          </li>
+          <li class="c-nav__item">
+            <a class="c-nav__link" href="https://store.rpipress.cc/collections/the-magpi-essentials">Buy now</a>
+          </li>
+          <li class="c-nav__item">
+            <a class="c-nav__link" href="https://magpi.raspberrypi.com/advertisers">Advertise</a>
+          </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+      <main>
+        
+        <div id="gpt-ad-KEiEmdpp3Kibajnh" data-ad-unit-path="/21917283373/magpi" data-ad-size="leaderboard" class="u-pv u-text-center"></div>
+
+<article>
+  <header class="c-slice u-bgcolor-white u-pb-x0">
+  <div class="o-container">
+    <div class="o-grid o-grid--center">
+      <div class="o-grid__col u-8/12@md">
+        <h1 class="o-type-display rspec-article-title">Monitor plant growth with AI and OpenCV</h1>
+        <p class="c-type-caption u-mb u-color-ui-grey-medium">
+          By <a class="c-link" href="https://magpi.raspberrypi.com/articles/author/7KmYtNZd4rWb5hjumZjuAY">Lucy Hattersley</a>.
+          Posted
+          <time datetime="2019-05-10T10:55:07+00:00" class="rspec-article-date">over 2 years ago.</time>
+        </p>
+
+        <ul class="o-list o-list--inline rspec-article-sharing-options">
+          <li class="o-list__item">
+            Share on:
+          </li>
+          <li class="o-list__item">
+            <a class="c-link rspec-article-share-option-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://magpi.raspberrypi.com/articles/monitor-plant-growth-ai-opencv" target="_blank">
+              <svg height="15px" version="1.1" viewBox="0 0 60.734 60.733" width="15px" x="0px" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" y="0px">
+  <path class="svg-path" d="
+      M57.378,0.001H3.352C1.502,0.001,0,1.5,0,3.353v54.026c0,1.853,1.502,3.354,3.352,3.354h29.086V37.214h-7.914v-9.167h7.914
+      v-6.76c0-7.843,4.789-12.116,11.787-12.116c3.355,0,6.232,0.251,7.071,0.36v8.198l-4.854,0.002c-3.805,0-4.539,1.809-4.539,4.462
+      v5.851h9.078l-1.187,9.166h-7.892v23.52h15.475c1.852,0,3.355-1.503,3.355-3.351V3.351C60.731,1.5,59.23,0.001,57.378,0.001z
+    " fill="#222222"></path>
+</svg>
+
+              Facebook
+            </a>
+          </li>
+          <li class="o-list__item">
+            <a class="c-link rspec-article-share-option-linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https://magpi.raspberrypi.com/articles/monitor-plant-growth-ai-opencv" target="_blank">
+              <svg height="15px" width="15px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#222222" d="m20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667h-3.554v-11.452h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zm-15.11-13.019c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019h-3.564v-11.452h3.564zm15.106-20.452h-20.454c-.979 0-1.771.774-1.771 1.729v20.542c0 .956.792 1.729 1.771 1.729h20.451c.978 0 1.778-.773 1.778-1.729v-20.542c0-.955-.8-1.729-1.778-1.729z"></path>
+</svg>
+
+              LinkedIn
+            </a>
+          </li>
+          <li class="o-list__item">
+            <a class="c-link rspec-article-share-option-pinterest" href="http://pinterest.com/pin/create/button/?url=https://magpi.raspberrypi.com/articles/monitor-plant-growth-ai-opencv" target="_blank">
+              
+<svg height="15px" width="15px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#222222" d="m12.017 0c-6.621 0-11.988 5.367-11.988 11.987 0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987 0-6.623-5.378-11.987-11.985-11.987z"></path>
+</svg>
+
+              Pinterest
+            </a>
+          </li>
+          <li class="o-list__item">
+            <a class="c-link rspec-article-share-option-reddit" href="https://reddit.com/submit?title=Monitor%20plant%20growth%20with%20AI%20and%20OpenCV&amp;url=https://magpi.raspberrypi.com/articles/monitor-plant-growth-ai-opencv" target="_blank">
+              
+<svg height="15px" width="15px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#222222" d="m12 0a12 12 0 0 0 -12 12 12 12 0 0 0 12 12 12 12 0 0 0 12-12 12 12 0 0 0 -12-12zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1 -2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87s-7.004-2.176-7.004-4.87c0-.183.015-.366.043-.534a1.748 1.748 0 0 1 -1.039-1.6c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zm-7.76 7.256c-.689 0-1.25.562-1.25 1.25 0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249s-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248s1.249-.561 1.249-1.249c0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0 -.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913s2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0 -.464 0c-.547.533-1.684.73-2.512.73s-1.979-.196-2.512-.73a.326.326 0 0 0 -.232-.095z"></path></svg>
+
+
+              Reddit
+            </a>
+          </li>
+          <li class="o-list__item">
+            <a class="c-link rspec-article-share-option-twitter" href="https://twitter.com/intent/tweet?text=Monitor%20plant%20growth%20with%20AI%20and%20OpenCV&amp;url=https://magpi.raspberrypi.com/articles/monitor-plant-growth-ai-opencv&amp;via=twitter" target="_blank">
+              <svg height="15px" version="1.1" viewBox="0 0 612 612" width="15px" x="0px" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" y="0px">
+  <path class="svg-path" d="
+      M612,116.258c-22.525,9.981-46.694,16.75-72.088,19.772c25.929-15.527,45.777-40.155,55.184-69.411
+      c-24.322,14.379-51.169,24.82-79.775,30.48c-22.907-24.437-55.49-39.658-91.63-39.658c-69.334,0-125.551,56.217-125.551,125.513
+      c0,9.828,1.109,19.427,3.251,28.606C197.065,206.32,104.556,156.337,42.641,80.386c-10.823,18.51-16.98,40.078-16.98,63.101
+      c0,43.559,22.181,81.993,55.835,104.479c-20.575-0.688-39.926-6.348-56.867-15.756v1.568c0,60.806,43.291,111.554,100.693,123.104
+      c-10.517,2.83-21.607,4.398-33.08,4.398c-8.107,0-15.947-0.803-23.634-2.333c15.985,49.907,62.336,86.199,117.253,87.194
+      c-42.947,33.654-97.099,53.655-155.916,53.655c-10.134,0-20.116-0.612-29.944-1.721c55.567,35.681,121.536,56.485,192.438,56.485
+      c230.948,0,357.188-191.291,357.188-357.188l-0.421-16.253C573.872,163.526,595.211,141.422,612,116.258z
+    " fill="#222222"></path>
+</svg>
+
+              Twitter
+            </a>
+          </li>
+          <li class="o-list__item">
+            <a class="c-link rspec-article-share-option-whatsapp" href="https://api.whatsapp.com/send?text=Monitor%20plant%20growth%20with%20AI%20and%20OpenCV%20https://magpi.raspberrypi.com/articles/monitor-plant-growth-ai-opencv" target="_blank">
+              
+<svg height="15px" width="15px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#222222" d="m17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52s-.669-1.612-.916-2.207c-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413s.248-1.289.173-1.413c-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1 -5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1 -1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297a11.815 11.815 0 0 0 -8.413-3.488c-6.555 0-11.89 5.335-11.893 11.892 0 2.096.547 4.142 1.588 5.945l-1.688 6.163 6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0 -3.48-8.413z"></path>
+</svg>
+
+              WhatsApp
+            </a>
+          </li>
+        </ul></div>
+      </div>
+    </div>
+  
+</header>
+
+  <div class="c-slice u-bgcolor-white">
+  <div class="o-container">
+    <div class="o-grid o-grid--center">
+      <div class="o-grid__col u-8/12@md">
+          <figure class="c-figure">
+            <img alt="" class="c-figure__image rspec-article-featured-image" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/monitor-plant-growth-with-ai.jpg">
+          </figure>
+
+        <div class="c-wysiwyg rspec-article-introduction">
+          <p>Measure the height and width of objects with your Raspberry Pi using only the Pi Camera Module and OpenCV</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <aside class="c-slice u-box-shadow-inset">
+    <div class="o-container">
+      <div class="o-grid o-grid--center o-grid--top">
+        <div class="o-grid__col u-12/12 u-3/12@sm u-pb">
+          <img alt="The MagPi issue 111 cover" class="rspec-article-boxout-image" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/001_MagPi111_COVER.jpg" width="240" height="310">
+        </div>
+
+        <div class="o-grid__col u-12/12 u-9/12@sm u-5/12@lg">
+          <h1 class="c-type-heading rspec-article-boxout-heading">
+            The MagPi issue 111 out now
+          </h1>
+
+          <p class="c-type-base rspec-article-boxout-text">
+            We are proud to announce Raspberry Pi Zero 2 W in this month’s edition of The MagPi magazine. We’ve got all the details on this quad-core powerhouse in the same tiny package. Read all about the clever SiP (system in a package) process that made it possible and meet the engineers behind the new design. 
+          </p>
+
+          <div class="c-issue-actions">
+    <div data-shopify-product-handle="the-magpi-magazine-111" class="c-issue-actions__button">
+      <a class="c-button c-button--block u-hidden" data-fallback="true" href="https://store.rpipress.cc/products/the-magpi-magazine-111">Buy now</a>
+<div class=" shopify-buy-frame shopify-buy-frame--product"><div class="has-image shopify-buy__layout-vertical shopify-buy__product"><div class="shopify-buy__btn-wrapper" data-element="product.buttonWrapper"><button disabled="" class="c-button c-button--block shopify-buy__btn-disabled " data-element="product.button">Sold out</button></div></div></div></div>
+    <div class="c-issue-actions__button">
+      <a class="c-button c-button--block" href="https://magpi.raspberrypi.com/subscribe/new">Subscribe</a>
+    </div>
+
+    <div class="c-issue-actions__button">
+      <a href="https://itunes.apple.com/us/app/the-magpi-magazine/id972033560?ls=1&amp;mt=8">
+        <img class="c-issue-actions__badge" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/apple-app-store-01f99066cee4ad3e87a3b4aff63e571ec96f86907e2945e50bc2705ea4f12333.png">
+</a>    </div>
+
+    <div class="c-issue-actions__button">
+      <a href="https://play.google.com/store/apps/details?id=com.raspberry.magpi">
+        <img class="c-issue-actions__badge" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/google-play-store-a0bc1b3038a34936be22269b5d3044697551826287decc9b5b9665928006823a.png">
+</a>    </div>
+
+      <a class="c-issue-actions__link c-link u-text-bold" href="https://magpi.raspberrypi.com/issues/111/pdf">Download Free PDF</a>
+</div>
+
+        </div>
+
+        <div id="gpt-ad-RRSMaqWVCv9pfUeX" data-ad-unit-path="/21917283373/magpi" data-ad-size="mpu" class="u-pv u-text-center o-grid__col u-pv-x0@lg u-12/12 u-4/12@lg"></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="c-slice u-bgcolor-white u-pb">
+  <div class="o-container">
+    <div class="o-grid o-grid--center">
+      <div class="o-grid__col u-8/12@md">
+        <div class="c-wysiwyg js-add-captions rspec-article-body">
+          <p>Do you know how tall your plant is? Do you wonder how high it is growing? Does using a ruler just sound like effort? Well, we have the tutorial for you. We’re going to monitor plant growth using images taken with a Pi Camera Module. In the process, we’ll introduce you to OpenCV, a powerful tool for image analysis and object recognition. By comparing your plant to a static object, OpenCV can be used to estimate its current height, all without touching. By adding data from other sensors, such as temperature or humidity, you too can build a smart plant.</p>
+
+<p>This tutorial was written by <a href="http://mrpjevans.com/">PJ Evans</a> and first appeared in The MagPi 81.&nbsp;Sign up to our newsletter to get a free digital copy of The MagPi every month. <a href="http://magpi.cc/subscribe">Or subscribe to us in print (12-month subscribers get a free Raspberry Pi computer)</a>.</p>
+
+<h2>Pick a spot for your Plant AI monitor</h2>
+
+<p>We’re going to be using OpenCV (version&nbsp;2) to measure our plant. To make sure our measurement is as accurate as possible, several factors need to be considered. The background must be plain and contrast against the plant; black or white is ideal. The area you are using must be very well lit when the image is taken. Finally, the camera must be 90 degrees to the plant, facing it directly. Any angles on any axis will cause poor measurement. If you are mounting the camera at a significant distance, you may want to consider a telephoto lens.</p>
+
+<p><a href="https://rpi-magazines.s3-eu-west-1.amazonaws.com/magpi/legacy-assets/2019/05/long.jpg"><div class="c-figure"><img src="https://rpi-magazines.s3-eu-west-1.amazonaws.com/magpi/legacy-assets/2019/05/long.jpg" alt=" Our testing rig. Note the camera is as close to 90 degrees to the plant as we could manage" class="c-figure__image"><span class="c-figure__caption"> Our testing rig. Note the camera is as close to 90 degrees to the plant as we could manage</span></div></a></p>
+
+<h3>Get a plant and object</h3>
+
+<p>So how do we pull off this measuring trick? We can estimate the height of an object by comparing it with another object that is a fixed and known width and height. The image taken by the camera needs to include both objects. Get a rectangular object of a comparable size to your plant; we used a long piece of Lego. A metal ruler would also work well. Mount your object in front of the camera so it is on the left of the image and the same distance from the camera as your plant.</p>
+
+<h3>Prepare your Pi</h3>
+
+<p>The software used to analyse the image is the powerful OpenCV library and its Python bindings. You can use any current Pi for this project, but the higher-end 3B/3B+ will be much quicker at processing the image. OpenCV requires an X Window system in place, so we need to start with Raspbian Stretch including the Raspberry Pi Desktop. Once ready to go and on the network, make sure everything is up-to-date by running:</p>
+
+<p><code>sudo apt update &amp;&amp; sudo apt -y upgrade</code></p>
+
+<p>Finally, install the camera, if you haven’t already, and enable it in Preferences &gt; Raspberry Pi Configuration &gt; Interfaces, then reboot.</p>
+
+<h3>Install dependencies</h3>
+
+<p>OpenCV is a bit trickier to install than most packages. It has lots of dependencies (additional software it ‘depends’ on) that are not installed alongside it. We also need a few other things to get OpenCV talking to the camera, so open up a Terminal window and run the following commands:</p>
+
+<p><code>sudo apt install python3-pip libatlas-base-dev libhdf5-100 libjasper1 libqtcore4 libqt4-test libqtgui4</code></p>
+
+<p><code>pip3 install imutils opencv-contrib-python picamera[array]</code></p>
+
+<p>Although piwheels speeds things up considerably, you can expect the second command to take a little while to run, so now’s a good time to get a cup of tea.</p>
+
+<h3>Calibration test</h3>
+
+<p>Before we start running code, make sure everything is lined up as you would like it. The easiest way to do this is to open a Terminal prompt on the Desktop and run the following command:</p>
+
+<p><code>raspistill -t 0</code></p>
+
+<p>This puts the camera in ‘preview’ mode (you’ll need to be directly connected to see this – it won’t work over VNC without extra configuration). Study the image carefully. Is the camera at an angle? Is it too high or low? Is there enough contrast between your object, plant, and background? How’s the light? Press CTRL+C when you’re finished.</p>
+
+<h3>Coding time</h3>
+
+<p>Enter the code from the plantbot.py listing in your editor of choice and save it. If you don’t fancy typing, <a href="http://magpi.cc/akmZsW">you can download the code and some sample images from here</a>. The code takes an image from the Pi Camera as a stream and sends it to OpenCV. The image is then placed through some cleaning filters and the shapes detected. We know the nearest shape to the 0,0 ‘origin’ (the top-left of the image) will be our calibration object. So long as we know the width of that object, we can estimate the size of others.</p>
+
+<div class="mceTemp"></div>
+
+<p><a href="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/boxes.jpg"><div class="c-figure"><img src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/boxes.jpg" alt=" An example of what OpenCV sees, with the calibration object on the left, and some daffodils on the right" class="c-figure__image"><span class="c-figure__caption"> An example of what OpenCV sees, with the calibration object on the left, and some daffodils on the right</span></div></a></p>
+
+<h3>Run the code</h3>
+
+<p>Let’s take our first image. Carefully measure&nbsp;the width of your calibration object. Ours&nbsp;was 16 mm. To run the code, enter the following command in the same location as your plantbot.py file:</p>
+
+<p><code>python3 plantbot.py -w 16</code></p>
+
+<p>Replace the ‘16’ with the width of your calibration object. After a few seconds, you’ll see the image with, hopefully, a light blue rectangle around the leftmost object and one or more boxes around the plant. As the plant is an irregular object, OpenCV will find lots of ‘bounding boxes.’ The code takes the highest and lowest to calculate the height.</p>
+
+<p><a href="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/dafbox.jpg"><div class="c-figure"><img src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/dafbox.jpg" alt=" This overlay shows how OpenCV has mapped the test image. It can be far more accurate, but this faster method meets our needs" class="c-figure__image"><span class="c-figure__caption"> This overlay shows how OpenCV has mapped the test image. It can be far more accurate, but this faster method meets our needs</span></div></a></p>
+
+<h3>Big plant data</h3>
+
+<p>Once you’ve had fun measuring all the things, you can alter the code to write the results to a file. Add the following to the ‘import’ section at the start of the code:</p>
+
+<p><code>import datetime</code></p>
+
+<p>Now remove the final six lines (the first one starts ‘print’) and replace with:</p>
+
+<p><code>print("\"" + str(datetime.datetime.now()) + "\"," + str(plantHeight))</code></p>
+
+<p>This version can be employed to create a CSV file of measurements that may be used to create graphs so you can track your plant’s growth.</p>
+
+<h3>Keep on schedule</h3>
+
+<p>Let’s say you wanted to take a measurement every day. You can do this by using Raspbian’s cron system. Cron is an easy way to run scripts on a regular basis. To access the main cron file (known as a crontab), run the following:</p>
+
+<p><code>sudo nano /etc/crontab</code></p>
+
+<p>At the bottom of the file, add this line:</p>
+
+<p><code>0 14 * * * pi python3 /home/pi/plantbot/plantbot.py -w 16 &gt;&gt; /home/pi/plantbot.csv</code></p>
+
+<p>This tells cron to run our script every day at 2pm (that’s the ‘0 14’ bit) and append its output to plantbot.csv, which can be read by any popular spreadsheet app.</p>
+
+<h3>Got water?</h3>
+
+<p>Now you’re collecting data on your beloved plant’s height, why not add other data too? A common Raspberry Pi project is to use soil moisture sensors. <a href="http://magpi.cc/seyhTc">These are inexpensive and widely available</a>. See if you can change the script to get moisture data and include it in the CSV output. You could even send alerts when your plant needs some water. If you imported weather data from free public APIs such as <a href="http://openweathermap.org/api">OpenWeatherMap</a> as well, you could see how changing conditions are affecting your plant!</p>
+
+<h3>More than plants</h3>
+
+<p>You can measure anything you want with this project, even growing youngsters, but why stop there? You’ve now had a taste of the power of OpenCV, which has many more capabilities than we’ve covered here. It is a powerhouse of computer vision that includes machine-learning capabilities that allow you to train your Pi to recognise objects, faces, and more. It’s a popular choice for robot builders and plays a major part in the autonomous challenges of Pi Wars. We can especially recommend <a href="http://pyimagesearch.com/">pyimagesearch.com</a>, which provided inspiration for this tutorial.</p>
+
+<p><a href="http://magpi.cc/omacNA">Click here to download the code from GitHub.</a></p>
+
+<pre class="lang:python decode:true " title="plantbot.py">import argparse
+import imutils.contours
+import cv2
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+from time import sleep
+
+# Get our options
+parser = argparse.ArgumentParser(description='Object height measurement')
+parser.add_argument("-w", "--width", type=float, required=True,
+                    help=
+"width of the left-most object in the image")
+args = vars(parser.parse_args())
+
+# Take a photo
+camera = PiCamera()
+rawCapture = PiRGBArray(camera)
+sleep(0.1)
+camera.capture(rawCapture, format="bgr")
+image = rawCapture.array
+
+# Cover to grayscale and blur
+greyscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+greyscale = cv2.GaussianBlur(greyscale, (7, 7), 0)
+
+# Detect edges and close gaps
+canny_output = cv2.Canny(greyscale, 50, 100)
+canny_output = cv2.dilate(canny_output, None, iterations=1)
+canny_output = cv2.erode(canny_output, None, iterations=1)
+
+# Get the contours of the shapes, sort l-to-r and create boxes
+_, contours, _ = cv2.findContours(canny_output, cv2.RETR_EXTERNAL,
+                                  cv2.CHAIN_APPROX_SIMPLE)
+if len(contours) &lt; 2:
+    print("Couldn't detect two or more objects")
+    exit(0)
+
+(contours, _) = imutils.contours.sort_contours(contours)
+contours_poly = [None]*len(contours)
+boundRect = [None]*len(contours)
+for i, c in enumerate(contours):
+    contours_poly[i] = cv2.approxPolyDP(c, 3, True)
+    boundRect[i] = cv2.boundingRect(contours_poly[i])
+
+output_image = image.copy()
+mmPerPixel = args["width"] / boundRect[0][2]
+highestRect = 1000
+lowestRect = 0
+
+for i in range(1, len(contours)):
+
+    # Too smol?
+    if boundRect[i][2] &lt; 50 or boundRect[i][3] &lt; 50:
+        continue
+
+    # The first rectangle is our control, so set the ratio
+    if highestRect &gt; boundRect[i][1]:
+        highestRect = boundRect[i][1]
+    if lowestRect &lt; (boundRect[i][1] + boundRect[i][3]):
+        lowestRect = (boundRect[i][1] + boundRect[i][3])
+
+    # Create a boundary box
+    cv2.rectangle(output_image, (int(boundRect[i][0]), int(boundRect[i][1])),
+                  (int(boundRect[i][0] + boundRect[i][2]),
+                  int(boundRect[i][1] + boundRect[i][3])), (255, 0, 0), 2)
+
+# Calculate the size of our plant
+plantHeight = (lowestRect - highestRect) * mmPerPixel
+print("Plant height is {0:.0f}mm".format(plantHeight))
+
+# Resize and display the image (press key to exit)
+resized_image = cv2.resize(output_image, (1280, 720))
+cv2.imshow("Image", resized_image)
+cv2.waitKey(0)</pre>
+
+<p>&nbsp;</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer class="c-slice u-bgcolor-white u-pt-x0">
+    <div class="o-container">
+      <div class="o-grid o-grid--center">
+        <div class="o-grid__col u-8/12@md">
+          <hr class="c-hr">
+
+          <div class="o-media o-media--res">
+              <div class="o-media__fixed">
+                <img alt="" class="rspec-article-author-image" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/92FF7C1D-A6CE-46E2-8096-2EF653BE70EB_1_.JPG" width="60" height="60">
+              </div>
+
+            <div class="o-media__fluid">
+              <p class="c-type-sub-heading rspec-article-author-name"><a class="c-link" href="https://magpi.raspberrypi.com/articles/author/7KmYtNZd4rWb5hjumZjuAY">Lucy Hattersley</a></p>
+
+                <p class="c-type-base rspec-article-author-biography">
+                  Lucy is Editor of The MagPi, the official Raspberry Pi magazine.
+                </p>
+
+                <p class="c-type-base">
+                  <a class="c-link" href="https://twitter.com/lucyhattersley">https://twitter.com/lucyhattersley</a>
+                </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</article>
+
+<footer class="c-slice u-bgcolor-white u-pt-x0">
+  <div class="o-container">
+    <div class="o-grid o-grid--center">
+      <div class="o-grid__col u-8/12@md">
+        <div id="coral_talk_stream"><iframe src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/stream.html" width="100%" scrolling="no" marginheight="0" frameborder="0" id="coral_talk_stream_iframe" name="coral_talk_stream_iframe" style="width: 1px; min-width: 100%; height: 410px;" height="410px"></iframe></div>
+        <script src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/embed.js.download" async="" onload="
+          Coral.Talk.render(document.getElementById(&#39;coral_talk_stream&#39;), {
+            talk: &#39;https://talk.raspberrypi.org/&#39;,
+            asset_url: &#39;https://magpi.raspberrypi.org/features/monitor-plant-growth-ai-opencv&#39;
+          });
+        "></script>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <div class="c-slice">
+    <div class="o-container">
+      <h2 class="c-type-heading u-text-center">From The MagPi store</h2>
+      <div data-shopify-collection-id="171314806883"><div class=" shopify-buy-frame shopify-buy-frame--productSet"><iframe horizontalscrolling="no" verticalscrolling="no" allowtransparency="true" frameborder="0" scrolling="no" name="frame-productSet-171314806883" style="width: 100%; overflow: hidden; border: none; height: 1536px;" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/saved_resource.html"></iframe></div></div>
+    </div>
+  </div>
+
+
+<div class="c-slice">
+  <div class="o-container">
+    <h2 class="c-type-heading u-text-center">More articles from The MagPi magazine</h2>
+      <div class="c-slice">
+    <div class="o-container">
+      <div class="o-grid o-grid--equal-height">
+        <article class="o-grid__col rspec-article-card u-1/2@sm u-1/3@lg u-mb-x5">
+  <a class="c-card c-card--link rspec-article-card--link" data-action="Clicked article introducing-raspberry-pi-zero-2-w-in-the-magpi-111" data-category="articles" data-label="article-introducing-raspberry-pi-zero-2-w-in-the-magpi-111" href="https://magpi.raspberrypi.com/articles/introducing-raspberry-pi-zero-2-w-in-the-magpi-111">
+    <img alt="Introducing Raspberry Pi Zero 2 W in The MagPi 111" class="c-card__image rspec-article-card--image" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/Magpi-111_210x276_Store.jpg">
+
+    <div class="c-card__content">
+      <p class="o-type-sub-heading u-weight-bold rspec-article-card--heading">Introducing Raspberry Pi Zero 2 W in The MagPi 111</p>
+
+      <time datetime="2021-10-28T07:00:00+01:00" class="o-type-caption u-block u-mb rspec-article-card--date">4 days ago.</time>
+
+      <p class="c-type-base rspec-article-card--description">Free Zero 2 W computer for all subscribers to The MagPi magazine </p>
+    </div>
+</a></article>
+<article class="o-grid__col rspec-article-card u-1/2@sm u-1/3@lg u-mb-x5">
+  <a class="c-card c-card--link rspec-article-card--link" data-action="Clicked article win-one-of-five-waveshare-e-ink-display-phats" data-category="articles" data-label="article-win-one-of-five-waveshare-e-ink-display-phats" href="https://magpi.raspberrypi.com/articles/win-one-of-five-waveshare-e-ink-display-phats">
+    <img alt="Win one of five Waveshare E-ink Display PHATs" class="c-card__image rspec-article-card--image" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/waveshare.jpg">
+
+    <div class="c-card__content">
+      <p class="o-type-sub-heading u-weight-bold rspec-article-card--heading">Win one of five Waveshare E-ink Display PHATs</p>
+
+      <time datetime="2021-10-27T10:00:00+01:00" class="o-type-caption u-block u-mb rspec-article-card--date">5 days ago.</time>
+
+      <p class="c-type-base rspec-article-card--description">Perfect for the new Raspberry Pi Zero 2 W! 20 heatsinks for runners-up</p>
+    </div>
+</a></article>
+<article class="o-grid__col rspec-article-card u-1/2@sm u-1/3@lg u-mb-x5">
+  <a class="c-card c-card--link rspec-article-card--link" data-action="Clicked article poe-usb-hub-hat-for-raspberry-pi-zero" data-category="articles" data-label="article-poe-usb-hub-hat-for-raspberry-pi-zero" href="https://magpi.raspberrypi.com/articles/poe-usb-hub-hat-for-raspberry-pi-zero">
+    <img alt="PoE USB Hub HAT  for Raspberry Pi Zero " class="c-card__image rspec-article-card--image" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/PoE_USB_02.jpg">
+
+    <div class="c-card__content">
+      <p class="o-type-sub-heading u-weight-bold rspec-article-card--heading">PoE USB Hub HAT  for Raspberry Pi Zero </p>
+
+      <time datetime="2021-10-25T12:00:00+01:00" class="o-type-caption u-block u-mb rspec-article-card--date">7 days ago.</time>
+
+      <p class="c-type-base rspec-article-card--description">Add Power over Ethernet and three USB ports to Raspberry Pi Zero. By Phil King</p>
+    </div>
+</a></article>
+<article class="o-grid__col rspec-article-card u-1/2@sm u-1/3@lg u-mb-x5">
+  <a class="c-card c-card--link rspec-article-card--link" data-action="Clicked article cyberdeck-portable-entertainment-system" data-category="articles" data-label="article-cyberdeck-portable-entertainment-system" href="https://magpi.raspberrypi.com/articles/cyberdeck-portable-entertainment-system">
+    <img alt="Cyberdeck portable entertainment system" class="c-card__image rspec-article-card--image" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/Cyberdeck_Neon.jpeg">
+
+    <div class="c-card__content">
+      <p class="o-type-sub-heading u-weight-bold rspec-article-card--heading">Cyberdeck portable entertainment system</p>
+
+      <time datetime="2021-10-22T07:00:00+01:00" class="o-type-caption u-block u-mb rspec-article-card--date">10 days ago.</time>
+
+      <p class="c-type-base rspec-article-card--description">Action adventurers and sci-fi tales inspired a Raspberry  Pi-concealing portable box of tricks. Rosie Hattersley peers inside </p>
+    </div>
+</a></article>
+<article class="o-grid__col rspec-article-card u-1/2@sm u-1/3@lg u-mb-x5">
+  <a class="c-card c-card--link rspec-article-card--link" data-action="Clicked article review-electronic-clock-for-raspberry-pi-pico" data-category="articles" data-label="article-review-electronic-clock-for-raspberry-pi-pico" href="https://magpi.raspberrypi.com/articles/review-electronic-clock-for-raspberry-pi-pico">
+    <img alt="Review: Electronic Clock for Raspberry Pi Pico" class="c-card__image rspec-article-card--image" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/Electronic_Clock_x1.jpg">
+
+    <div class="c-card__content">
+      <p class="o-type-sub-heading u-weight-bold rspec-article-card--heading">Review: Electronic Clock for Raspberry Pi Pico</p>
+
+      <time datetime="2021-10-20T07:00:00+01:00" class="o-type-caption u-block u-mb rspec-article-card--date">12 days ago.</time>
+
+      <p class="c-type-base rspec-article-card--description">A large LED clock powered by Pico and with customisable functions. By Phil King</p>
+    </div>
+</a></article>
+<article class="o-grid__col rspec-article-card u-1/2@sm u-1/3@lg u-mb-x5">
+  <a class="c-card c-card--link rspec-article-card--link" data-action="Clicked article interview-matt-gray" data-category="articles" data-label="article-interview-matt-gray" href="https://magpi.raspberrypi.com/articles/interview-matt-gray">
+    <img alt="Interview: Matt Gray" class="c-card__image rspec-article-card--image" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/Screenshot_2021-10-15_at_10.53.20.png">
+
+    <div class="c-card__content">
+      <p class="o-type-sub-heading u-weight-bold rspec-article-card--heading">Interview: Matt Gray</p>
+
+      <time datetime="2021-10-18T07:00:00+01:00" class="o-type-caption u-block u-mb rspec-article-card--date">14 days ago.</time>
+
+      <p class="c-type-base rspec-article-card--description">A YouTuber with a penchant for making, with an amazing Raspberry Pi-powered Game Boy Camera</p>
+    </div>
+</a></article>
+
+      </div>
+
+      <p class="u-text-center">
+        <a class="c-button" data-action="Clicked see more articles" data-category="articles" data-label="More Articles" href="https://magpi.raspberrypi.com/articles">See more articles</a>
+      </p>
+    </div>
+  </div>
+
+  </div>
+</div>
+
+  <div class="c-slice u-box-shadow-inset">
+    <div class="o-container">
+      <h2 class="c-type-heading u-text-center rspec-subscribe-heading">
+  Subscribe to The MagPi magazine
+</h2>
+
+<div class="o-grid o-grid--center o-grid--top">
+  <div class="o-grid__col u-12/12 u-1/2@sm u-1/3@lg">
+    <img alt="Subscribe to The MagPi magazine" class="rspec-subscribe-image" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/Subscribe_Banner_Pi_Zero_W.jpg">
+  </div>
+
+  <div class="o-grid__col u-12/12 u-1/2@sm u-1/3@lg u-pt u-pt-x0@sm">
+    <p class="c-type-base rspec-subscribe-description">
+      Save 37% off the cover price with a subscription to The MagPi magazine. Try three issues for just £5, then pay £25 every six issues. You’ll save money and get a regular supply of in-depth reviews, features, guides and other PC enthusiast goodness delivered directly to your door every month.
+    </p>
+
+    <p class="c-type-base">
+      <a class="c-button" data-action="Clicked Subscribe to The MagPi magazine" data-category="subscriptions" data-label="Subscribe CTA" href="https://magpi.raspberrypi.com/subscribe/new">Subscribe</a>
+    </p>
+  </div>
+
+  <div id="gpt-ad-CLsH7uzkBWoNdS2L" data-ad-unit-path="/21917283373/magpi" data-ad-size="mpu" class="u-text-center o-grid__col u-12/12 u-1/3@lg"></div>
+</div>
+
+    </div>
+  </div>
+
+<div id="gpt-ad-KQMorU4byJM7WTaa" data-ad-unit-path="/21917283373/magpi" data-ad-size="leaderboard" class="u-pv u-text-center u-bgcolor-white"></div>
+
+
+
+      </main>
+      <footer class="c-footer c-slice c-light-on-dark u-bgcolor-ui-black">
+  <div class="o-container c-footer__container">
+    <div class="c-footer__nav">
+      <ul class="c-footer-nav-list">
+          <li class="c-footer-nav-list__item">
+            <a class="c-footer-nav-list__link" href="https://magpi.raspberrypi.com/">Home</a>
+          </li>
+          <li class="c-footer-nav-list__item">
+            <a class="c-footer-nav-list__link" href="https://magpi.raspberrypi.com/about">About</a>
+          </li>
+          <li class="c-footer-nav-list__item">
+            <a class="c-footer-nav-list__link" href="https://magpi.raspberrypi.com/articles">Articles</a>
+          </li>
+          <li class="c-footer-nav-list__item">
+            <a class="c-footer-nav-list__link" href="https://magpi.raspberrypi.com/articles/category/tutorials">Tutorials</a>
+          </li>
+          <li class="c-footer-nav-list__item">
+            <a class="c-footer-nav-list__link" href="https://magpi.raspberrypi.com/articles/category/reviews">Reviews</a>
+          </li>
+          <li class="c-footer-nav-list__item">
+            <a class="c-footer-nav-list__link" href="https://magpi.raspberrypi.com/issues">Issues</a>
+          </li>
+          <li class="c-footer-nav-list__item">
+            <a class="c-footer-nav-list__link" href="https://magpi.raspberrypi.com/books">Books</a>
+          </li>
+          <li class="c-footer-nav-list__item">
+            <a class="c-footer-nav-list__link" href="https://magpi.raspberrypi.com/subscribe/new">Subscribe</a>
+          </li>
+          <li class="c-footer-nav-list__item">
+            <a class="c-footer-nav-list__link" href="https://store.rpipress.cc/collections/the-magpi-essentials">Buy now</a>
+          </li>
+          <li class="c-footer-nav-list__item">
+            <a class="c-footer-nav-list__link" href="https://magpi.raspberrypi.com/advertisers">Advertise</a>
+          </li>
+          <li class="c-footer-nav-list__item">
+            <a class="c-footer-nav-list__link" href="https://magpi.raspberrypi.com/contact">Contact us</a>
+          </li>
+          <li class="c-footer-nav-list__item">
+            <a class="c-footer-nav-list__link" href="https://www.raspberrypi.com/privacy/">Privacy Policy</a>
+          </li>
+          <li class="c-footer-nav-list__item">
+            <a class="c-footer-nav-list__link" href="https://magpi.cc/write">Write for us</a>
+          </li>
+      </ul>
+    </div>
+
+    <div class="c-footer__actions">
+      <div class="c-issue-actions c-issue-actions--footer">
+    <div data-shopify-product-handle="the-magpi-magazine-111" class="c-issue-actions__button">
+      <a class="c-button c-button--block u-hidden" data-fallback="true" href="https://store.rpipress.cc/products/the-magpi-magazine-111">Buy now</a>
+<div class=" shopify-buy-frame shopify-buy-frame--product"><div class="has-image shopify-buy__layout-vertical shopify-buy__product"><div class="shopify-buy__btn-wrapper" data-element="product.buttonWrapper"><button disabled="" class="c-button c-button--block shopify-buy__btn-disabled " data-element="product.button">Sold out</button></div></div></div></div>
+    <div class="c-issue-actions__button">
+      <a class="c-button c-button--block" href="https://magpi.raspberrypi.com/subscribe/new">Subscribe</a>
+    </div>
+
+    <div class="c-issue-actions__button">
+      <a href="https://itunes.apple.com/us/app/the-magpi-magazine/id972033560?ls=1&amp;mt=8">
+        <img class="c-issue-actions__badge" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/apple-app-store-01f99066cee4ad3e87a3b4aff63e571ec96f86907e2945e50bc2705ea4f12333.png">
+</a>    </div>
+
+    <div class="c-issue-actions__button">
+      <a href="https://play.google.com/store/apps/details?id=com.raspberry.magpi">
+        <img class="c-issue-actions__badge" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/google-play-store-a0bc1b3038a34936be22269b5d3044697551826287decc9b5b9665928006823a.png">
+</a>    </div>
+
+</div>
+
+    </div>
+
+    <div class="c-footer__social">
+      <ul class="c-social-list">
+    <li class="c-social-list__item">
+      <a class="c-social-list__link" href="https://www.youtube.com/channel/UCgZlbxTljh1aXKijTRye5bA">
+        <svg height="30px" version="1.1" viewBox="0 0 60 60" width="30px" x="0px" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <path class="svg-path" fill="#ffffff" fill-rule="evenodd" d="M56.35 16.676a6.91 6.91 0 00-4.862-4.894C47.199 10.625 30 10.625 30 10.625s-17.2 0-21.488 1.157a6.91 6.91 0 00-4.863 4.894C2.5 20.993 2.5 30 2.5 30s0 9.007 1.15 13.324a6.911 6.911 0 004.862 4.894C12.8 49.375 30 49.375 30 49.375s17.2 0 21.488-1.157a6.91 6.91 0 004.863-4.894C57.5 39.007 57.5 30 57.5 30s0-9.007-1.15-13.324 M24.375 38.178L38.75 30l-14.375-8.178v16.356z"></path>
+</svg>
+
+        <span class="u-visually-hidden">Subscribe to The MagPi on YouTube</span>
+</a>    </li>
+
+    <li class="c-social-list__item">
+      <a class="c-social-list__link" href="https://www.facebook.com/MagPiMagazine">
+        <svg height="30px" version="1.1" viewBox="0 0 60.734 60.733" width="30px" x="0px" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" y="0px">
+  <path class="svg-path" d="
+      M57.378,0.001H3.352C1.502,0.001,0,1.5,0,3.353v54.026c0,1.853,1.502,3.354,3.352,3.354h29.086V37.214h-7.914v-9.167h7.914
+      v-6.76c0-7.843,4.789-12.116,11.787-12.116c3.355,0,6.232,0.251,7.071,0.36v8.198l-4.854,0.002c-3.805,0-4.539,1.809-4.539,4.462
+      v5.851h9.078l-1.187,9.166h-7.892v23.52h15.475c1.852,0,3.355-1.503,3.355-3.351V3.351C60.731,1.5,59.23,0.001,57.378,0.001z
+    " fill="#ffffff"></path>
+</svg>
+
+        <span class="u-visually-hidden">Like The MagPi on Facebook</span>
+</a>    </li>
+
+    <li class="c-social-list__item">
+      <a class="c-social-list__link" href="https://twitter.com/TheMagPi">
+        <svg height="30px" version="1.1" viewBox="0 0 612 612" width="30px" x="0px" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" y="0px">
+  <path class="svg-path" d="
+      M612,116.258c-22.525,9.981-46.694,16.75-72.088,19.772c25.929-15.527,45.777-40.155,55.184-69.411
+      c-24.322,14.379-51.169,24.82-79.775,30.48c-22.907-24.437-55.49-39.658-91.63-39.658c-69.334,0-125.551,56.217-125.551,125.513
+      c0,9.828,1.109,19.427,3.251,28.606C197.065,206.32,104.556,156.337,42.641,80.386c-10.823,18.51-16.98,40.078-16.98,63.101
+      c0,43.559,22.181,81.993,55.835,104.479c-20.575-0.688-39.926-6.348-56.867-15.756v1.568c0,60.806,43.291,111.554,100.693,123.104
+      c-10.517,2.83-21.607,4.398-33.08,4.398c-8.107,0-15.947-0.803-23.634-2.333c15.985,49.907,62.336,86.199,117.253,87.194
+      c-42.947,33.654-97.099,53.655-155.916,53.655c-10.134,0-20.116-0.612-29.944-1.721c55.567,35.681,121.536,56.485,192.438,56.485
+      c230.948,0,357.188-191.291,357.188-357.188l-0.421-16.253C573.872,163.526,595.211,141.422,612,116.258z
+    " fill="#ffffff"></path>
+</svg>
+
+        <span class="u-visually-hidden">Follow The MagPi on Twitter</span>
+</a>    </li>
+
+    <li class="c-social-list__item">
+      <a class="c-social-list__link" href="https://magpi.raspberrypi.com/feed">
+        <svg height="30px" version="1.1" viewBox="0 0 430.117 430.118" width="30px" x="0px" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" y="0px">
+  <path class="svg-path" d="
+      M97.493,332.473c10.419,10.408,16.755,24.525,16.794,40.244c-0.04,15.687-6.375,29.809-16.755,40.17l-0.04,0.019
+      c-10.398,10.352-24.603,16.681-40.398,16.681c-15.775,0-29.944-6.348-40.34-16.699C6.384,402.526,0,388.422,0,372.717
+      c0-15.719,6.384-29.869,16.754-40.253v0.009c10.401-10.36,24.57-16.735,40.34-16.735C72.89,315.738,87.081,322.131,97.493,332.473z
+      M97.493,332.464v0.009c0.019,0,0.019,0,0.019,0L97.493,332.464z M16.754,412.906c0,0,0,0,0-0.019c-0.019,0-0.019,0-0.019,0
+      L16.754,412.906z M0.046,146.259v82.129c53.618,0.033,104.328,21.096,142.278,59.104c37.943,37.888,58.917,88.675,59.003,142.477
+      h0.028v0.149h82.467c-0.065-78.233-31.866-149.099-83.279-200.549C149.122,178.126,78.285,146.308,0.046,146.259z M0.196,0v82.089
+      c191.661,0.14,347.464,156.184,347.594,348.028h82.327c-0.056-118.571-48.248-225.994-126.132-303.932
+      C226.073,48.274,118.721,0.051,0.196,0z
+    " fill="#ffffff"></path>
+</svg>
+
+        <span class="u-visually-hidden">Subscribe to the The MagPi RSS feed</span>
+</a>    </li>
+</ul>
+
+    </div>
+
+    <div class="c-footer__newsletter">
+      <form action="https://magpi.us8.list-manage.com/subscribe/post?u=e31349e35c9c4dfb8bdf10e69&amp;id=e2ce89f288" class="c-form u-mb-x5" method="post" novalidate="" target="_blank">
+  <input name="b_e31349e35c9c4dfb8bdf10e69_748d641b78" type="hidden" value="">
+<input name="group[82803][262144]" type="hidden" value="1">
+<input name="group[82803][524288]" type="hidden" value="1">
+<input name="group[82803][1048576]" type="hidden" value="1">
+<input name="group[82803][2097152]" type="hidden" value="1">
+
+
+  <div class="u-clearfix">
+    <label class="c-label u-weight-bold" for="footer_newsletter_form_email">
+      The MagPi magazine newsletter
+    </label>
+
+    <input class="c-input u-mb" id="footer_newsletter_form_email" name="EMAIL" placeholder="you@example.com" type="email" value="">
+
+    <button class="c-button u-border-x2 u-1/2 u-5/12@md u-4/12@sm u-float-right" name="subscribe" type="submit">
+      Sign up
+    </button>
+  </div>
+</form>
+
+    </div>
+  </div>
+
+  <div class="c-footer__copyright">
+    <p class="c-type-caption">
+      ©2021
+      <a class="c-footer__link" href="https://www.raspberrypi.com/">Raspberry Pi Trading Ltd</a>
+    </p>
+  </div>
+</footer>
+
+  <script src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/prism-core.min.js.download"></script>
+  <script src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/prism-autoloader.min.js.download"></script>
+
+
+  
+
+<div class="shopify-buy-frame shopify-buy-frame--toggle is-sticky" tabindex="0" role="button" aria-label="cart"><iframe horizontalscrolling="no" verticalscrolling="no" allowtransparency="true" frameborder="0" scrolling="no" name="frame-toggle" style="width: 0px; overflow: hidden; border: none; height: 0px;" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/saved_resource(1).html"></iframe></div><div class="shopify-buy-cart-wrapper shopify-buy-frame shopify-buy-frame--cart"><iframe horizontalscrolling="no" verticalscrolling="no" allowtransparency="true" frameborder="0" scrolling="no" name="frame-cart" style="width: 100%; overflow: hidden; border: none;" src="./Monitor plant growth with AI and OpenCV — The MagPi magazine_files/saved_resource(2).html"></iframe></div><div id="coral-notif" style="position: fixed; cursor: default; user-select: none; background-color: rgb(50, 50, 50); z-index: 3; will-change: transform, opacity; transition: transform 0.35s cubic-bezier(0.55, 0, 0.1, 1) 0s, opacity 0.35s ease 0s; pointer-events: none; padding: 12px 18px 0px; color: rgb(255, 255, 255); border-radius: 4px; max-width: 400px; left: 50%; opacity: 0; transform: translate(-50%, 20px); bottom: 20px; box-sizing: border-box; font-family: Helvetica, &quot;Helvetica Neue&quot;, Verdana, sans-serif; display: flex;"><div class="coral-notif-text" style="padding-bottom: 12px;"></div><div class="coral-notif-close" style="font-size: 20px; cursor: pointer; margin-left: 10px; position: relative; top: -4px;">×</div></div></body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>

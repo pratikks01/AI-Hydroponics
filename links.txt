@@ -1,0 +1,54 @@
+https://www.sciencedirect.com/science/article/pii/S1877050921014630
+https://ieeexplore.ieee.org/abstract/document/9515023
+https://jrmat.com/upload/-V12I3106.pdf
+https://link.springer.com/chapter/10.1007/978-981-16-7633-8_28
+done https://ieeexplore.ieee.org/abstract/document/8541251 hydro
+done https://ieeexplore.ieee.org/abstract/document/8300782
+done https://ieeexplore.ieee.org/abstract/document/8257697
+http://www.ijiet.org/vol9/1264-FE1001.pdf
+https://journals.utm.my/jurnalteknologi/article/view/8713
+https://ejournal.unwaha.ac.id/index.php/newton/article/view/1616
+done https://ieeexplore.ieee.org/abstract/document/9544637
+https://ieec.neduet.edu.pk/2019/Papers_IEEC_2019/IEEC_2019_33.pdf
+http://eprints.ums.ac.id/92723/
+https://www.actahort.org/books/133/133_12.htm
+https://www.indianjournals.com/ijor.aspx?target=ijor:ijan&volume=33&issue=3&article=021
+https://www.sciencedirect.com/science/article/pii/S2214785321006039
+https://iopscience.iop.org/article/10.1088/1757-899X/1022/1/012032/meta
+http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.492.1623&rep=rep1&type=pdf
+
+***
+
+Related Work.. (pratik)
+D. Saraswathi, P. Manibharathy, R. Gokulnath, E. Sureshkumar and K. Karthikeyan, "Automation of Hydroponics Green House Farming using IOT," 2018 IEEE International Conference on System, Computation, Automation and Networking (ICSCA), 2018, pp. 1-4, doi: 10.1109/ICSCAN.2018.8541251.
+R. Nalwade and T. Mote, "Hydroponics farming," 2017 International Conference on Trends in Electronics and Informatics (ICEI), 2017, pp. 645-650, doi: 10.1109/ICOEI.2017.8300782.
+D. Eridani, O. Wardhani and E. D. Widianto, "Designing and implementing the arduino-based nutrition feeding automation system of a prototype scaled nutrient film technique (NFT) hydroponics using total dissolved solids (TDS) sensor," 2017 4th International Conference on Information Technology, Computer, and Electrical Engineering (ICITACEE), 2017, pp. 170-175, doi: 10.1109/ICITACEE.2017.8257697.
+G. Manohar, V. K. Sundari, A. E. Pious, A. Beno, L. D. V. Anand and D. Ravikumar, "IoT based Automation of Hydroponics using Node MCU Interface," 2021 Third International Conference on Inventive Research in Computing Applications (ICIRCA), 2021, pp. 32-36, doi: 10.1109/ICIRCA51532.2021.9544637.
+Taranjeet Singh1, Krishna Kumar and SS Bedi Published under license by IOP Publishing Ltd IOP Conference Series: Materials Science and Engineering, Volume 1022, 1st International Conference on Computational Research and Data Analytics (ICCRDA 2020) 24th October 2020, Rajpura, India
+
+
+
+
+
+Concept 
+10Bhagat, M.; Kumar, D.; Kumar, D. Role of Internet of Things (IoT) in Smart Farming: A Brief Survey. In Proceedings of the IEEE 2019 Devices for Integrated Circuit (DevIC), Kalyani, India, 23–24 March 2019; pp. 141–145. 
+Stoˇces, M.; Vanˇek, J.; Masner, J.; Pavlík, J. Internet of Things (IoT) in Agriculture—Selected Aspects. Agris online Pap. Econ. Information. 2016, VIII, 83–88. [CrossRef] 
+Statista Forecasted Market Value of Precision Farming Worldwide in 2018 and 2023. Available online: https: //www.statista.com/statistics/721921/forecasted-market-value-of-precision-farming-worldwide/ (accessed on 1 October 2019).
+Kite-Powell, J. Why Precision Agriculture Will Change How Food Is Produced. Available online: https://www.forbes.com/sites/jenniferhicks/2018/04/30/why-precision-agriculture-will-change-howfood-is-produced/#1aa438ec6c65 (accessed on 18 November 2018).
+Madakam, S.; Ramaswamy, R.; Tripathi, S. Internet of Things (IoT): A Literature Review. J. Comput. Commun. 2015, 3, 164–173.
+Zhao, J.C.; Zhang, J.F.; Feng, Y.; Guo, J.X. The study and application of the IoT technology in agriculture. In Proceedings of the IEEE 2010 3rd International Conference on Computer Science and Information Technology, Chengdu, China, 9–11 July 2010; Volume 2, pp. 462–465
+Verdouw, C.; Sundmaeker, H.; Tekinerdogan, B.; Conzon, D.; Montanaro, T. Architecture framework of IoT-based food and farm systems: A multiple case study. Comput. Electron. Agric. 2019, 165, 104939. [CrossRef]
+
+
+
+Related Work.. (sanskruti)  
+
+International Journal of Information and Education Technology, Vol. 9, No. 8, August 2019
+Automated smart hydroponics system using internet of things Ravi Lakshmanan, Mohamed Djama, Sathish Kumar Selvaperumal, Raed Abdulla Faculty of Computing, Engineering and Technology, Asia Pacific University of Technology and Innovation (APU), Technology Park Malaysia, Malaysia International Journal of Information and Education Technology, Vol. 9, No. 8, August 2019
+An AI Based System Design to Develop and Monitor a Hydroponic Farm Hydroponic Farming for Smart City Glenn Dbritto Computer Department St. Francis institute of TechnologyMumbai, India
+Plant growth monitoring system, with dynamic user interface Jerrin James College of Engineering Trivandrum University of Kerala Trivandrum, Kerala, India
+Journal of Biodiversity and Environmental Sciences (JBES) Franklin K, King J, Burton A, Brown S. 2010. Hydroponics around the world. Practical hydroponics and greenhouses,
+First Advances on the Development of a Hydroponic System for Cherry Tomato Culture
+L. A. Velázquez, 2013 10th International Conference on Electrical Engineering, Computing Science and Automatic Control (CCE) Mexico City, Mexico. September 30-October 4, 2013
+Park, S.; Kim, J. Design and Implementation of a Hydroponic Strawberry Monitoring and Harvesting Timing Information Supporting System Based on Nano AI-Cloud and IoT-Edge. Electronics 2021, 10, 1400. https://doi.org/ 10.3390/electronics10121400
+

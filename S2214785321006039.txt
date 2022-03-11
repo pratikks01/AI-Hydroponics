@@ -1,0 +1,13 @@
+C.H. Vanipriya,  Maruyi, Subhash Malladi, Gaurav Gupta,
+Artificial intelligence enabled plant emotion xpresser in the development hydroponics system,
+Materials Today: Proceedings,
+Volume 45, Part 6,
+2021,
+Pages 5034-5040,
+ISSN 2214-7853,
+https://doi.org/10.1016/j.matpr.2021.01.512.
+(https://www.sciencedirect.com/science/article/pii/S2214785321006039)
+Abstract: In this paper the development of scalable Hydroponics monitoring systems is presented. Hydroponics, a system of growing crops without soil, has been successfully used to grow crops on a commercial scale. Hydroponics has the potential to fill the gap of low agricultural production in India due to its high efficiency while serving as an environmentally friendly alternative to soil culture. This method of farming has benefitted from new technologies like IoT and machine learning that make it possible to integrate intelligent agents in the management of hydroponic systems as well as collecting live data. These technologies allow for increased automation and refined control of hydroponic systems. In this paper the development and execution of a hydroponic structure equipped with intelligent agents for internet enabled monitoring, data collection and storage.
+Problem Formulation
+Nowadays, as the population is growing widely it becomes difficult for the cultivation of plants in the land. There are different types of soil present on the earth, it is not possible to cultivate all types of plants everywhere. Due to scarcity of water, it becomes difficult for the farmers to cultivate the plant in the soil. In conventional methods, farmers need to monitor the plants frequently for the good yield. The effects of global warming, and the plants are affected with UV rays. For this reason, it is more difficult to plant in an uncontrolled environment. To overcome all the above problems, we implement the cultivation of plants in water without soil.
+Keywords: Hydroponics; IoT; Machine leaning; Intelligent agent; Smart agriculture
